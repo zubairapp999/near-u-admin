@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppointmentsRouteImport } from './routes/appointments'
+import { Route as PatientsRouteImport } from './routes/patients'
+import { Route as VideoConsultRouteImport } from './routes/video-consult'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const AppointmentsRoute = AppointmentsRouteImport.update({
   path: '/appointments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatientsRoute = PatientsRouteImport.update({
+  id: '/patients',
+  path: '/patients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideoConsultRoute = VideoConsultRouteImport.update({
+  id: '/video-consult',
+  path: '/video-consult',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/patients': typeof PatientsRoute
+  '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/patients': typeof PatientsRoute
+  '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/patients': typeof PatientsRoute
+  '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/appointments'
+  fullPaths: '/' | '/appointments' | '/patients' | '/video-consult'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/appointments'
-  id: '__root__' | '/' | '/appointments'
+  to: '/' | '/appointments' | '/patients' | '/video-consult'
+  id: '__root__' | '/' | '/appointments' | '/patients' | '/video-consult'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppointmentsRoute: typeof AppointmentsRoute
+  PatientsRoute: typeof PatientsRoute
+  VideoConsultRoute: typeof VideoConsultRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppointmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/patients': {
+      id: '/patients'
+      path: '/patients'
+      fullPath: '/patients'
+      preLoaderRoute: typeof PatientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/video-consult': {
+      id: '/video-consult'
+      path: '/video-consult'
+      fullPath: '/video-consult'
+      preLoaderRoute: typeof VideoConsultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppointmentsRoute: AppointmentsRoute,
+  PatientsRoute: PatientsRoute,
+  VideoConsultRoute: VideoConsultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
