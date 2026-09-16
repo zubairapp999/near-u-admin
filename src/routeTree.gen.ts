@@ -11,7 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppointmentsRouteImport } from './routes/appointments'
+import { Route as AvailabilityRouteImport } from './routes/availability'
+import { Route as EarningsRouteImport } from './routes/earnings'
 import { Route as PatientsRouteImport } from './routes/patients'
+import { Route as PayoutsRouteImport } from './routes/payouts'
+import { Route as PrescriptionsRouteImport } from './routes/prescriptions'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as ServiceFeesRouteImport } from './routes/service-fees'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as VideoConsultRouteImport } from './routes/video-consult'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +32,49 @@ const AppointmentsRoute = AppointmentsRouteImport.update({
   path: '/appointments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvailabilityRoute = AvailabilityRouteImport.update({
+  id: '/availability',
+  path: '/availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EarningsRoute = EarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PatientsRoute = PatientsRouteImport.update({
   id: '/patients',
   path: '/patients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayoutsRoute = PayoutsRouteImport.update({
+  id: '/payouts',
+  path: '/payouts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrescriptionsRoute = PrescriptionsRouteImport.update({
+  id: '/prescriptions',
+  path: '/prescriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceFeesRoute = ServiceFeesRouteImport.update({
+  id: '/service-fees',
+  path: '/service-fees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VideoConsultRoute = VideoConsultRouteImport.update({
@@ -38,34 +86,103 @@ const VideoConsultRoute = VideoConsultRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/availability': typeof AvailabilityRoute
+  '/earnings': typeof EarningsRoute
   '/patients': typeof PatientsRoute
+  '/payouts': typeof PayoutsRoute
+  '/prescriptions': typeof PrescriptionsRoute
+  '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-fees': typeof ServiceFeesRoute
+  '/settings': typeof SettingsRoute
   '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/availability': typeof AvailabilityRoute
+  '/earnings': typeof EarningsRoute
   '/patients': typeof PatientsRoute
+  '/payouts': typeof PayoutsRoute
+  '/prescriptions': typeof PrescriptionsRoute
+  '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-fees': typeof ServiceFeesRoute
+  '/settings': typeof SettingsRoute
   '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/appointments': typeof AppointmentsRoute
+  '/availability': typeof AvailabilityRoute
+  '/earnings': typeof EarningsRoute
   '/patients': typeof PatientsRoute
+  '/payouts': typeof PayoutsRoute
+  '/prescriptions': typeof PrescriptionsRoute
+  '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-fees': typeof ServiceFeesRoute
+  '/settings': typeof SettingsRoute
   '/video-consult': typeof VideoConsultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/appointments' | '/patients' | '/video-consult'
+  fullPaths:
+    | '/'
+    | '/appointments'
+    | '/availability'
+    | '/earnings'
+    | '/patients'
+    | '/payouts'
+    | '/prescriptions'
+    | '/profile'
+    | '/reviews'
+    | '/service-fees'
+    | '/settings'
+    | '/video-consult'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/appointments' | '/patients' | '/video-consult'
-  id: '__root__' | '/' | '/appointments' | '/patients' | '/video-consult'
+  to:
+    | '/'
+    | '/appointments'
+    | '/availability'
+    | '/earnings'
+    | '/patients'
+    | '/payouts'
+    | '/prescriptions'
+    | '/profile'
+    | '/reviews'
+    | '/service-fees'
+    | '/settings'
+    | '/video-consult'
+  id:
+    | '__root__'
+    | '/'
+    | '/appointments'
+    | '/availability'
+    | '/earnings'
+    | '/patients'
+    | '/payouts'
+    | '/prescriptions'
+    | '/profile'
+    | '/reviews'
+    | '/service-fees'
+    | '/settings'
+    | '/video-consult'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppointmentsRoute: typeof AppointmentsRoute
+  AvailabilityRoute: typeof AvailabilityRoute
+  EarningsRoute: typeof EarningsRoute
   PatientsRoute: typeof PatientsRoute
+  PayoutsRoute: typeof PayoutsRoute
+  PrescriptionsRoute: typeof PrescriptionsRoute
+  ProfileRoute: typeof ProfileRoute
+  ReviewsRoute: typeof ReviewsRoute
+  ServiceFeesRoute: typeof ServiceFeesRoute
+  SettingsRoute: typeof SettingsRoute
   VideoConsultRoute: typeof VideoConsultRoute
 }
 
@@ -85,11 +202,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppointmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/availability': {
+      id: '/availability'
+      path: '/availability'
+      fullPath: '/availability'
+      preLoaderRoute: typeof AvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/earnings': {
+      id: '/earnings'
+      path: '/earnings'
+      fullPath: '/earnings'
+      preLoaderRoute: typeof EarningsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/patients': {
       id: '/patients'
       path: '/patients'
       fullPath: '/patients'
       preLoaderRoute: typeof PatientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payouts': {
+      id: '/payouts'
+      path: '/payouts'
+      fullPath: '/payouts'
+      preLoaderRoute: typeof PayoutsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prescriptions': {
+      id: '/prescriptions'
+      path: '/prescriptions'
+      fullPath: '/prescriptions'
+      preLoaderRoute: typeof PrescriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service-fees': {
+      id: '/service-fees'
+      path: '/service-fees'
+      fullPath: '/service-fees'
+      preLoaderRoute: typeof ServiceFeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/video-consult': {
@@ -105,7 +278,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppointmentsRoute: AppointmentsRoute,
+  AvailabilityRoute: AvailabilityRoute,
+  EarningsRoute: EarningsRoute,
   PatientsRoute: PatientsRoute,
+  PayoutsRoute: PayoutsRoute,
+  PrescriptionsRoute: PrescriptionsRoute,
+  ProfileRoute: ProfileRoute,
+  ReviewsRoute: ReviewsRoute,
+  ServiceFeesRoute: ServiceFeesRoute,
+  SettingsRoute: SettingsRoute,
   VideoConsultRoute: VideoConsultRoute,
 }
 export const routeTree = rootRouteImport
