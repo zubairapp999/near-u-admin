@@ -218,14 +218,30 @@
 //   )
 // }
 
+// import {
+//   CalendarDays,
+//   Clock,
+//   DollarSign,
+//   Download,
+//   Users,
+//   Video,
+//   ArrowRight,
+// } from "lucide-react"
+
 import {
+  ArrowRight,
   CalendarDays,
   Clock,
   DollarSign,
   Download,
+  FileText,
+  LayoutDashboard,
+  MessageSquare,
+  Settings,
+  Star,
   Users,
   Video,
-  ArrowRight,
+  Wallet,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -342,42 +358,42 @@ const workspaceModules = [
   {
     title: "Prescriptions",
     description: "Create & print digital Rx",
-    icon: "Rx",
+    icon: FileText,
   },
   {
     title: "Service & Fees",
     description: "Consultation types & fees",
-    icon: "✦",
+    icon: DollarSign,
   },
   {
     title: "Availability",
     description: "Weekly schedule & slots",
-    icon: "↗",
+    icon: CalendarDays,
   },
   {
     title: "Reviews",
     description: "Patient feedback & replies",
-    icon: "★",
+    icon: Star,
   },
   {
     title: "Earnings",
     description: "Consultation revenue",
-    icon: "₹",
+    icon: Wallet,
   },
   {
     title: "Payouts",
     description: "Bank settlements",
-    icon: "↔",
+    icon: Wallet,
   },
   {
     title: "Public Profile",
     description: "Clinic profile & verification",
-    icon: "▦",
+    icon: LayoutDashboard,
   },
   {
     title: "Settings",
     description: "Account & notifications",
-    icon: "⚙",
+    icon: Settings,
   },
 ]
 
@@ -812,43 +828,31 @@ export default function Dashboard() {
           <CardContent className="px-3 sm:px-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {workspaceModules.map((module) => {
-                const isComponentIcon = typeof module.icon !== "string"
-
-                const Icon = isComponentIcon ? module.icon : null
+                const Icon = module.icon
 
                 return (
                   <button
                     key={module.title}
                     type="button"
-                    className="group flex min-h-[72px] w-full min-w-0 items-center justify-between rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-950"
+                    className="group flex min-h-[72px] w-full min-w-0 items-center justify-between rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
                   >
-                    {/* Left Content */}
                     <div className="flex min-w-0 items-center gap-3">
-                      {/* Icon */}
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 sm:size-11 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-400">
-                        {Icon ? (
-                          <Icon className="size-4" />
-                        ) : (
-                          <span className="text-sm font-medium">
-                            {module.icon}
-                          </span>
-                        )}
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 sm:size-11">
+                        <Icon className="size-4" />
                       </div>
 
-                      {/* Text */}
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+                        <p className="truncate text-sm font-semibold text-slate-900">
                           {module.title}
                         </p>
 
-                        <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">
+                        <p className="mt-0.5 truncate text-xs text-slate-500">
                           {module.description}
                         </p>
                       </div>
                     </div>
 
-                    {/* Arrow */}
-                    <ArrowRight className="ml-2 size-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-slate-700 dark:text-slate-500 dark:group-hover:text-slate-200" />
+                    <ArrowRight className="ml-2 size-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-slate-700" />
                   </button>
                 )
               })}
