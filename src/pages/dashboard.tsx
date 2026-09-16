@@ -236,7 +236,6 @@ import {
   Download,
   FileText,
   LayoutDashboard,
-  MessageSquare,
   Settings,
   Star,
   Users,
