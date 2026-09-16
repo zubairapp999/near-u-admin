@@ -45,14 +45,16 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="px-4 py-4">
-          <h1 className="text-lg font-semibold">Near-U</h1>
-          <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+          <h1 className="text-lg font-semibold">NearU</h1>
+          <p className="text-xs text-muted-foreground">
+            Doctor / Clinic Workspace
+          </p>
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+          <SidebarGroupLabel>WORKSPACE</SidebarGroupLabel>
 
           <SidebarGroupContent>
             <SidebarMenu>
@@ -100,7 +102,7 @@ export function AppSidebar() {
 
           <div>
             <p className="text-sm font-medium">Admin User</p>
-            <p className="text-xs text-muted-foreground">admin@near-u.com</p>
+            <p className="text-xs text-muted-foreground">admin@nearu.com</p>
           </div>
         </div>
       </SidebarFooter>

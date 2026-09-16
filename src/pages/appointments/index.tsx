@@ -57,12 +57,12 @@ const appointments = [
   },
 ]
 
-export default function Dashboard() {
+export default function Appointments() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Appointments</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Appointmentss</h1>
 
         <p className="text-sm text-muted-foreground">
           Welcome back! Here's what's happening today.
