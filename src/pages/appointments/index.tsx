@@ -1,189 +1,453 @@
-import { CalendarDays, Clock, DollarSign, Users, Video } from "lucide-react"
+import {
+  CalendarDays,
+  CheckCircle2,
+  Clock,
+  Download,
+  Edit,
+  MoreHorizontal,
+  Search,
+  Trash2,
+  Video,
+} from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const stats = [
-  {
-    title: "Total Patients",
-    value: "1,284",
-    change: "+12.5%",
-    icon: Users,
-  },
-  {
-    title: "Appointments",
-    value: "328",
-    change: "+8.2%",
-    icon: CalendarDays,
-  },
-  {
-    title: "Video Consultations",
-    value: "146",
-    change: "+15.3%",
-    icon: Video,
-  },
-  {
-    title: "Total Earnings",
-    value: "₹84,250",
-    change: "+10.8%",
-    icon: DollarSign,
-  },
-]
-
 const appointments = [
   {
+    reference: "#NU-1001",
+    patient: "Neha Sharma",
+    date: "Today",
+    time: "5:00 PM",
+    mode: "Clinic",
+    status: "Confirmed",
+  },
+  {
+    reference: "#NU-1002",
     patient: "Rahul Sharma",
-    type: "Video Consultation",
-    time: "09:30 AM",
+    date: "Today",
+    time: "5:30 PM",
+    mode: "Video",
     status: "Confirmed",
   },
   {
+    reference: "#NU-1003",
     patient: "Priya Verma",
-    type: "Clinic Visit",
+    date: "Tomorrow",
     time: "10:15 AM",
-    status: "Confirmed",
-  },
-  {
-    patient: "Amit Kumar",
-    type: "Video Consultation",
-    time: "11:00 AM",
+    mode: "Clinic",
     status: "Pending",
   },
   {
-    patient: "Neha Singh",
-    type: "Clinic Visit",
-    time: "12:30 PM",
+    reference: "#NU-1004",
+    patient: "Amit Kumar",
+    date: "Tomorrow",
+    time: "11:00 AM",
+    mode: "Video",
     status: "Confirmed",
+  },
+  {
+    reference: "#NU-1005",
+    patient: "Riya Singh",
+    date: "15 Sep",
+    time: "2:30 PM",
+    mode: "Clinic",
+    status: "Completed",
   },
 ]
 
+const activityData = [
+  { day: "Mon", value: 82 },
+  { day: "Tue", value: 70 },
+  { day: "Wed", value: 61 },
+  { day: "Thu", value: 48 },
+  { day: "Fri", value: 36 },
+  { day: "Sat", value: 25 },
+  { day: "Sun", value: 20 },
+]
+
 export default function Appointments() {
+  const chartWidth = 800
+  const chartHeight = 150
+  const paddingX = 20
+  const paddingTop = 15
+  const paddingBottom = 30
+
+  const chartInnerWidth = chartWidth - paddingX * 2
+  const chartInnerHeight = chartHeight - paddingTop - paddingBottom
+
+  const chartPoints = activityData.map((item, index) => {
+    const x = paddingX + (index / (activityData.length - 1)) * chartInnerWidth
+
+    const y =
+      paddingTop + chartInnerHeight - (item.value / 100) * chartInnerHeight
+
+    return { x, y }
+  })
+
+  const linePath = chartPoints
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+    .join(" ")
+
+  const areaPath = `
+    ${linePath}
+    L ${chartPoints[chartPoints.length - 1].x} ${paddingTop + chartInnerHeight}
+    L ${chartPoints[0].x} ${paddingTop + chartInnerHeight}
+    Z
+  `
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Appointmentss</h1>
+      <Card className="overflow-hidden">
+        <CardHeader className="p-5 sm:p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-w-0">
+              <p className="mb-1 text-[10px] font-semibold tracking-widest text-emerald-600 uppercase">
+                Workspace Module
+              </p>
 
-        <p className="text-sm text-muted-foreground">
-          Welcome back! Here's what's happening today.
-        </p>
+              <CardTitle className="text-xl font-semibold tracking-tight sm:text-2xl">
+                Appointments
+              </CardTitle>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                Bookings, slots & status. Add, edit, search, filter and export
+                records from here.
+              </p>
+            </div>
+
+            <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+              <button
+                type="button"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              >
+                <Download className="size-4" />
+                <span>Export</span>
+              </button>
+
+              <button
+                type="button"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600"
+              >
+                <span className="text-base">+</span>
+                Add Appointment
+              </button>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
+
+      {/* Search & Filters */}
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="relative min-w-0 flex-1">
+          <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+
+          <input
+            type="text"
+            placeholder="Search appointments..."
+            className="h-10 w-full rounded-xl border border-slate-200 bg-white pr-4 pl-10 text-sm transition outline-none placeholder:text-slate-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+          />
+        </div>
+
+        <select
+          defaultValue="all"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 transition outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 sm:w-[160px]"
+        >
+          <option value="all">All status</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon
-
-          return (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-
-                <Icon className="size-4 text-muted-foreground" />
-              </CardHeader>
-
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold tracking-tight">18</p>
 
                 <p className="mt-1 text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">
-                    {stat.change}
-                  </span>{" "}
-                  from last month
+                  Total records
                 </p>
-              </CardContent>
-            </Card>
-          )
-        })}
+              </div>
+
+              <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <CalendarDays className="size-4" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold tracking-tight">14</p>
+
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Active / completed
+                </p>
+              </div>
+
+              <div className="flex size-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
+                <CheckCircle2 className="size-4" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold tracking-tight">4</p>
+
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Needs attention
+                </p>
+              </div>
+
+              <div className="flex size-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                <Clock className="size-4" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold tracking-tight">Live</p>
+
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Workspace status
+                </p>
+              </div>
+
+              <div className="flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <Video className="size-4" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Main Content */}
-      <div className="grid gap-6 lg:grid-cols-7">
-        {/* Appointments */}
-        <Card className="lg:col-span-5">
-          <CardHeader>
-            <CardTitle>Today's Appointments</CardTitle>
-          </CardHeader>
+      {/* Appointments Table */}
+      <Card className="min-w-0 overflow-hidden">
+        <CardContent className="p-0">
+          <div className="w-full overflow-x-auto">
+            <div className="min-w-[760px]">
+              {/* Header */}
+              <div className="grid grid-cols-[1.1fr_1.4fr_0.7fr_0.7fr_0.8fr_0.9fr_1.2fr] items-center border-b bg-slate-50 px-4 py-3 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                <div>Reference</div>
+                <div>Patient</div>
+                <div>Date</div>
+                <div>Time</div>
+                <div>Mode</div>
+                <div>Status</div>
+                <div>Actions</div>
+              </div>
 
-          <CardContent>
-            <div className="space-y-4">
-              {appointments.map((appointment) => (
-                <div
-                  key={`${appointment.patient}-${appointment.time}`}
-                  className="flex items-center justify-between rounded-lg border p-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-muted">
-                      <Clock className="size-4" />
+              {/* Rows */}
+              <div className="divide-y divide-slate-100">
+                {appointments.map((appointment) => (
+                  <div
+                    key={appointment.reference}
+                    className="grid grid-cols-[1.1fr_1.4fr_0.7fr_0.7fr_0.8fr_0.9fr_1.2fr] items-center px-4 py-4 transition-colors hover:bg-slate-50"
+                  >
+                    <div className="text-sm font-medium text-slate-600">
+                      {appointment.reference}
+                    </div>
+
+                    <div className="text-sm font-medium text-slate-800">
+                      {appointment.patient}
+                    </div>
+
+                    <div className="text-sm text-slate-500">
+                      {appointment.date}
+                    </div>
+
+                    <div className="text-sm text-slate-500">
+                      {appointment.time}
                     </div>
 
                     <div>
-                      <p className="font-medium">{appointment.patient}</p>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-slate-600">
+                        {appointment.mode === "Video" ? (
+                          <Video className="size-3.5 text-emerald-600" />
+                        ) : (
+                          <CalendarDays className="size-3.5 text-slate-400" />
+                        )}
 
-                      <p className="text-sm text-muted-foreground">
-                        {appointment.type}
-                      </p>
+                        {appointment.mode}
+                      </span>
+                    </div>
+
+                    <div>
+                      <Badge
+                        className={
+                          appointment.status === "Confirmed"
+                            ? "border-0 bg-emerald-100 text-emerald-700 hover:bg-emerald-100"
+                            : appointment.status === "Pending"
+                              ? "border-0 bg-amber-100 text-amber-700 hover:bg-amber-100"
+                              : "border-0 bg-slate-100 text-slate-600 hover:bg-slate-100"
+                        }
+                      >
+                        {appointment.status}
+                      </Badge>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        title="Edit"
+                        className="inline-flex size-7 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600"
+                      >
+                        <Edit className="size-3.5" />
+                      </button>
+
+                      <button
+                        type="button"
+                        title="More"
+                        className="inline-flex size-7 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50 hover:text-slate-700"
+                      >
+                        <MoreHorizontal className="size-3.5" />
+                      </button>
+
+                      <button
+                        type="button"
+                        title="Delete"
+                        className="inline-flex size-7 items-center justify-center rounded-lg border border-red-100 bg-white text-red-500 transition hover:bg-red-50"
+                      >
+                        <Trash2 className="size-3.5" />
+                      </button>
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm font-medium">
-                      {appointment.time}
-                    </span>
+          {/* Mobile hint */}
+          <div className="border-t bg-slate-50 px-4 py-2 text-center text-[11px] text-muted-foreground sm:hidden">
+            Swipe horizontally to view all appointment details.
+          </div>
+        </CardContent>
+      </Card>
 
-                    <Badge
-                      variant={
-                        appointment.status === "Confirmed"
-                          ? "default"
-                          : "secondary"
-                      }
-                    >
-                      {appointment.status}
-                    </Badge>
-                  </div>
-                </div>
+      {/* Activity Chart */}
+      <Card className="min-w-0 overflow-hidden">
+        <CardHeader>
+          <CardTitle className="text-sm font-semibold">
+            Appointment activity
+          </CardTitle>
+
+          <p className="text-xs text-muted-foreground">
+            Live visual summary from saved records
+          </p>
+        </CardHeader>
+
+        <CardContent className="pt-0">
+          <div className="w-full overflow-hidden">
+            <svg
+              viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+              className="h-[180px] w-full"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient
+                  id="appointment-area"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stopColor="#8b7cf6" stopOpacity="0.25" />
+
+                  <stop offset="100%" stopColor="#8b7cf6" stopOpacity="0.03" />
+                </linearGradient>
+
+                <linearGradient
+                  id="appointment-line"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="0"
+                >
+                  <stop offset="0%" stopColor="#22c55e" />
+
+                  <stop offset="100%" stopColor="#2dd4bf" />
+                </linearGradient>
+              </defs>
+
+              {/* Grid lines */}
+              {[0, 1, 2].map((line) => {
+                const y = paddingTop + (chartInnerHeight / 2) * line
+
+                return (
+                  <line
+                    key={line}
+                    x1={paddingX}
+                    x2={chartWidth - paddingX}
+                    y1={y}
+                    y2={y}
+                    stroke="currentColor"
+                    strokeOpacity="0.15"
+                    className="text-slate-500"
+                  />
+                )
+              })}
+
+              {/* Area */}
+              <path d={areaPath} fill="url(#appointment-area)" />
+
+              {/* Line */}
+              <path
+                d={linePath}
+                fill="none"
+                stroke="url(#appointment-line)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Points */}
+              {chartPoints.map((point, index) => (
+                <circle
+                  key={index}
+                  cx={point.x}
+                  cy={point.y}
+                  r="3"
+                  fill="#4fd1c5"
+                />
               ))}
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Quick Overview */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Quick Overview</CardTitle>
-          </CardHeader>
+              {/* Days */}
+              {activityData.map((item, index) => {
+                const x =
+                  paddingX +
+                  (index / (activityData.length - 1)) * chartInnerWidth
 
-          <CardContent className="space-y-5">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Pending Appointments
-              </p>
-
-              <p className="mt-1 text-2xl font-bold">12</p>
-            </div>
-
-            <div>
-              <p className="text-sm text-muted-foreground">Completed Today</p>
-
-              <p className="mt-1 text-2xl font-bold">24</p>
-            </div>
-
-            <div>
-              <p className="text-sm text-muted-foreground">Pending Payout</p>
-
-              <p className="mt-1 text-2xl font-bold">₹18,450</p>
-            </div>
-
-            <div>
-              <p className="text-sm text-muted-foreground">Average Rating</p>
-
-              <p className="mt-1 text-2xl font-bold">4.8 ⭐</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                return (
+                  <text
+                    key={item.day}
+                    x={x}
+                    y={chartHeight - 8}
+                    textAnchor="middle"
+                    className="fill-slate-400 text-[10px]"
+                  >
+                    {item.day}
+                  </text>
+                )
+              })}
+            </svg>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
