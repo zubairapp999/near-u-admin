@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router"
 import {
   Activity,
   CheckCircle2,
@@ -101,7 +102,7 @@ export default function PublicProfile() {
               </p>
             </div>
 
-            <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+            {/* <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
               <button
                 type="button"
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
@@ -117,6 +118,23 @@ export default function PublicProfile() {
                 <span className="text-base">+</span>
                 Add Public Profile
               </button>
+            </div> */}
+            <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+              <button
+                type="button"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              >
+                <Download className="size-4" />
+                Export
+              </button>
+
+              <Link
+                to="/doctor"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600"
+              >
+                <span className="text-base">+</span>
+                Add Public Profile
+              </Link>
             </div>
           </div>
         </CardHeader>
