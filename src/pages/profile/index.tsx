@@ -8,7 +8,6 @@ import {
   Languages,
   MapPin,
   Save,
-  Stethoscope,
   UserRound,
   X,
 } from "lucide-react"
