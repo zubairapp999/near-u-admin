@@ -1,9 +1,18 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import { Header } from "@/components/header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Outlet } from "@tanstack/react-router"
+import { Outlet, useRouterState } from "@tanstack/react-router"
 
 function App() {
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+
+  // Authentication pages intentionally sit outside the authenticated admin shell.
+  if (pathname === "/login") {
+    return <Outlet />
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />

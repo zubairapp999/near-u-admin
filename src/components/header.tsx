@@ -1,4 +1,5 @@
-import { Bell, Search } from "lucide-react"
+import { Bell, LogOut, Search } from "lucide-react"
+import { useNavigate } from "@tanstack/react-router"
 
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
@@ -7,6 +8,13 @@ import { Input } from "@/components/ui/input"
 import { ModeToggle } from "@/components/mode-toggle"
 
 export function Header() {
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    sessionStorage.removeItem("demo-authenticated")
+    navigate({ to: "/login" })
+  }
+
   return (
     <header className="flex h-16 shrink-0 items-center gap-3 border-b bg-background px-4">
       {/* Sidebar Toggle */}
@@ -40,6 +48,26 @@ export function Header() {
             <p className="font-medium">Admin User</p>
             <p className="text-xs text-muted-foreground">Administrator</p>
           </div>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="hidden gap-2 text-muted-foreground md:inline-flex"
+          >
+            <LogOut className="size-4" />
+            Logout
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleLogout}
+            className="md:hidden"
+          >
+            <LogOut className="size-4" />
+            <span className="sr-only">Logout</span>
+          </Button>
         </div>
       </div>
     </header>
